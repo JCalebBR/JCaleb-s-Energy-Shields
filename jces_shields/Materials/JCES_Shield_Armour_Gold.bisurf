@@ -1,0 +1,12 @@
+Density = 1000;
+Thickness = 10000;
+rough = 0.1;
+dust = 0;
+bulletPenetrability = 15;
+soundEnviron = Empty;
+isWater = true;
+friction = 0.8;
+restitution = 0.1;
+impact = hitMetalPlate;
+soundHit = metal_plate;
+deflection = 1;

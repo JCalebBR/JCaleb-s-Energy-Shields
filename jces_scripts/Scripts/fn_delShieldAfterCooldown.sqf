@@ -1,7 +1,7 @@
 #include "script_component.hpp"
 
 params["_player"];
-private["_duration", "_bronze", "_iron", "_gold", "_items"];
+private["_duration", "_bronze", "_iron", "_gold", "_items", "_before"];
 
 _bronze = missionNamespace getVariable "jces_halo_bronze";
 _iron = missionNamespace getVariable "jces_halo_iron";
@@ -27,7 +27,7 @@ if (_gold findIf {
 } != -1) then {
 	_duration = missionNamespace getVariable ['jces_zen_shieldDurationGold', -1];
 };
-systemChat format ["Shield duration: %1 seconds", _duration];
+
 ["", {
 	ace_player call jces_shield_fnc_delShield;
 }, _duration] call BIS_fnc_runLater;

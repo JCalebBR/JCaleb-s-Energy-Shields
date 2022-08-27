@@ -1,0 +1,129 @@
+[h1]This [b]WON'T[/b] protect you from WebKnight's Melee and other forms of scripted damage, although shown in example video, that seemed to be lag from having that many melee units[/h1]
+
+[h1]What is this mod?[/h1]
+Initially, this adds three different types, or tiers, of shields to emulate the behavior of Space Marine Iron Halos in the 40K Universe. 
+
+Obviously for balance reasons, I created three different types with different kinds of protections.
+Bronze Tier: 290 mm RHA Steel;
+Iron Tier: 800 mm RHA Steel;
+Gold Tier: 10000 mm RHA Steel / Invulnerable (except for scripted damage);
+
+This all sounds excellent, but normally shields from other mods are straight up walls.
+These shields work as in lore shields, where:
+ - You [b]can[/b] shoot from [b]inside TO outside[/b];
+ - You [b]can't[/b] be shot from [b]outside TO inside[/b] (unless it penetrates);
+
+[h1]Why such disparity in armor values?[/h1]
+This was balanced versus most weapons a space marine might face when using the popular TIOW(1/2) and AoD mods. 
+I compiled my own spreadsheet of different speed, "caliber" and penetration values for most weapons from these mods. ([url=https://docs.google.com/spreadsheets/d/1_EzY_Soi9jtWb1Yct43Ho_5yROvBIgC8RpeT0WpCefo/edit?usp=sharing]Link to spreadsheet[/url])
+Given these values, that seemed to be a good range to not make it that much overpowered for the marines, but still keep it spread out to have a perceived increased in defensiveness.
+
+[h1]OK, I trust you, but how do they work?[/h1]
+You are able to use the shields by two ways:
+1. Using a compatible (Iron) Halo from the "facewear" category, as showed in image below
+    [img]https://raw.githubusercontent.com/JCalebBR/JCaleb-s-Energy-Shields/main/readme-images/facewear.png[/img]
+2. Having one of these items found in the misc. category on your inventory
+    [img]https://raw.githubusercontent.com/JCalebBR/JCaleb-s-Energy-Shields/main/readme-images/misc.png[/img]
+
+The system will detect any changes in equipment as soon as you ACE Self Interact/Keybind press and set your duration and cooldown accordingly to your tier. 
+If you use both methods at the same time, the highest tier found in the unit will be used.
+Examples: 
+- Unit has Iron Halo (Bronze) but Personal Shield (Iron) in inventory, shield will be of type Iron;
+- Unit has Iron Halo (Gold) but Personal Shield (Bronze) in inventory, shield will be of type Gold;
+
+System logic once you ACE Self Interact:
+ Checks:
+    [olist]
+  [*]Checks if the unit has either compatible facewear or items in inventory;
+  [*]Checks if the unit already has a shield attached to it;
+   - If true, stop, "Deactivate Shield" interaction pops up;
+   - If false, proceed;
+  [*]Checks if the unit's cooldown has run out;
+   - If true, proceed;
+   - If false, stop;
+  [*]"Activate Shield" Interaction pops up;
+    [/olist]
+ Then:
+    [olist]
+  [*]Initializes shield;
+  [*]Deletes shield after duration;
+    [/olist]
+
+[h1]That's really cool, but how do I set different settings?[/h1]
+Glad you asked. The duration (time the shield will be online) and cooldown (time the shield will be offline) can be customized by tiers by using a module.
+Settings can be set both on EDEN and while on ZEUS. The newest placed module overrides previous settings.
+
+[img]https://raw.githubusercontent.com/JCalebBR/JCaleb-s-Energy-Shields/main/readme-images/settings.png[/img]
+Input is treated as seconds, tested up to 3 minutes, unknown if it works with higher times (please test and report back :D)
+
+[img]https://raw.githubusercontent.com/JCalebBR/JCaleb-s-Energy-Shields/main/readme-images/cba_settings.png[/img]
+
+[h1]This is fantastic! Are there any performance caveats?[/h1]
+[b]Most likely[/b] not. As tested with around 25 players and 55 other mods.
+Server-wise, the only script that runs is the propagation of the settings to all clients, which runs only once and is very lightweight as it only sends a few numbers. As long as you don't spam new modules, it should work fine.
+All other code is run locally by the client, and I tried to optimize it by writing my code based on ACE3's scripts.
+
+Arma3 scripting is black magic, and I'm only an apprentice wizard after spending two weeks on this, if you find any issues, let me know.
+
+[h1]Models, Retexturing and so on[/h1]
+Models were made by myself after a few days learning LODs and Armor materials, if you want to do something similar, feel free to reach out, and I'll give you a few pointers.
+
+This is straight out-of-the-box compatible with retexturing. You can access the outside (3rd person view) texture and inside (1st person view) textures by these selections
+[code]
+hiddenSelections[] = {"Outside", "Inside"};
+[/code]
+
+If you want to spawn the shield on a unit and the self interaction / keybind is not working, make sure they have the facewear or item you want the shield to be and run this code by double-clicking that unit
+[code]
+_this call jces_shield_fnc_initShield;
+[/code]
+Alternatively, to delete their shield
+[code]
+_this call jces_shield_fnc_delShield;
+[/code]
+
+[h1]Compatibility[/h1]
+
+✅ [url=https://steamcommunity.com/sharedfiles/filedetails/?id=2107836294]Dosiel Funtime 40k Models[/url]
+✅ [url=https://steamcommunity.com/sharedfiles/filedetails/?id=2452029370]Black Templars Armoury[/url]
+
+If your mod adds new iron halo models and you want compatibility, reach out
+
+[h1]Known Issues[/h1]
+[list]
+[*]Initial cooldown applies on mission start;
+ - Example: Cooldown is set to X seconds. 
+     [list]
+        [*]When the unit spawns, the initial cooldown before it activates the shield for the first time is set to X, instead of being available from the start THEN cooldown being applied.
+        [/list]
+ - Workarounds: 
+        [list]
+  [*]Have unit spawn, get facewear or item via loadout change/arsenal;
+  [*]Change to a different facewear or item, ACE Self Interact, change back to initial item;
+  [*]Set EDEN module cooldowns to 1 second, once you are ready to start your mission for real, go into ZEUS and place a new module with desired settings;
+        [/list]
+[*]ZEUS Remote Controlled unit doesn't deactivate shield;
+ - Example: I am a ZEUS. I spawn a unit, change their loadout accordingly and remote control them. I activate their shield, it activates correctly. I stop remote controlling unit, duration time runs out, but the shield is never deactivated.
+ - Workarounds: 
+        [list]
+  [*]Delete their shield via script, as show in example in "Models, Retexturing and so on";
+  [*]As soon as the unit has served its purpose laid down by the ZEUS, remote control them and deactivate shield manually;
+  [*]Continue controlling the unit for the whole duration of the shield, emulating a real player, it will work normally;
+        [/list]
+[/list]
+
+[h1]Future plans:[/h1]
+[list]
+[*] Human sized shields;
+    - Soon TM
+[*]Static shields for location defense;
+    - 80% done
+[*]Portable shields which a unit can place down, similar to an ACE Deployable (Launcher slot);
+    - 95% done :)
+[*]Health values, where hits that don't penetrate still damage the health of the shield itself, which could cause it to "overload" and deactivate prematurely.
+[/list]
+
+[h1]Credits[/h1]
+[list]
+[*] Bal & The Ultramarines - Initial idea after initial prototype shield was developed, patience and playtesting.
+[/list]

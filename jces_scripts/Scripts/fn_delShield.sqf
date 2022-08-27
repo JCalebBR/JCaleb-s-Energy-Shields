@@ -3,7 +3,7 @@
 	params["_player"];
 	private["_res", "_valid", "_obj"];
 
-	_valid = ["JCES_Shield_Oval_Bronze", "JCES_Shield_Oval_Iron", "JCES_Shield_Oval_Gold"];
+	_valid = ["JCES_Shield_Oval_Bronze", "JCES_Shield_Oval_Bronze_OP", "JCES_Shield_Oval_Iron", "JCES_Shield_Oval_Iron_OP", "JCES_Shield_Oval_Gold", "JCES_Shield_Oval_Gold_OP"];
 	_obj = attachedObjects _player;
 
 	if (count _obj > 0) then {

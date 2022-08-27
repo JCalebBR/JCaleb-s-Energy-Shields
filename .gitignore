@@ -3,13 +3,4 @@
 *.blend
 *.blend*
 *.p3d
-*.steamworkshop
-jces_shields/Textures/JCES_Shield_Bronze_Inside_CA.png
-jces_shields/Textures/JCES_Shield_Gold_Inside_CA.png
-jces_shields/Textures/JCES_Shield_Inside_CA.png
-jces_shields/Textures/JCES_Shield_Iron_Outside_CA.png
-jces_shields/Textures/JCES_Shield_Iron_Inside_CA.png
-jces_shields/Textures/JCES_Shield_Gold_Outside_CA.png
-jces_shields/Textures/JCES_Shield_Bronze_Outside_CA.png
-jces_shields/Textures/JCES_Shield_Outside_CA.png
-jces_meta/logo.png
+*.png

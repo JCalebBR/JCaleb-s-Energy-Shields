@@ -26,10 +26,16 @@
 		_type = "JCES_Shield_Oval_Gold";
 	};
 
+	if (str side _player == "EAST") then {
+		_type = _type + "_OP"
+	};
+
 	_shield = _type createVehicle getPosWorld _player;
 	detach _shield;
 	_shield attachTo [_player, [0, 0.2, -0.4], "spine3"];
 	_shield allowDamage true;
+
+	createVehicleCrew _shield;
 
 	{
 		_x addCuratorEditableObjects [[_shield], false];

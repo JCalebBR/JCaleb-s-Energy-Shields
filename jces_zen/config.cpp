@@ -2,7 +2,7 @@
 
 class CfgPatches {
     class JCalebs_Energy_Shields_ZEN {
-        name = "JCaleb's 40K Energy Shields (ZEN)";
+        name = "JCaleb's Energy Shields (ZEN)";
         author = "JCaleb2014";
         requiredVersion = 1.6;
         units[] = {"jces_zen_settings"};
@@ -15,6 +15,7 @@ class CfgFactionClasses {
     class jces_zen_modules : NO_CATEGORY {
         displayName = "JCaleb's Modules";
         author = "JCaleb2014";
+        side = 0;
     };
 };
 
@@ -63,7 +64,7 @@ class CfgVehicles {
     };
     class jces_zen_settings : jces_zen_module {
         scope = 2;
-        scopeCurator = 2;
+        scopeCurator = 1;
         displayName = "Cooldown Settings";
         function = "jces_zen_fnc_moduleSettings";
         class Attributes : AttributesBase {

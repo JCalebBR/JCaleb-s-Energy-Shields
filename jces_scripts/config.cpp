@@ -4,7 +4,7 @@ class CfgPatches {
         name = "JCaleb's Energy Shields (Scripts)";
         author = "JCaleb2014";
         requiredVersion = 1.6;
-        requiredAddons[] = {"ace_interaction", "Dos_Cosmetics"};
+        requiredAddons[] = {"ace_interaction"};
         units[] = {};
     };
 };

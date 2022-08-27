@@ -14,16 +14,6 @@ These shields work as in lore shields, where:
 	- You **can** shoot from **inside TO outside**;
 	- You **can't** be shot from **outside TO inside** (unless it penetrates);
 
-
-## Future plans:
-- Human sized shields;
-  - Soon TM
-- Static shields for location defense;
-  - 80% done
-- Portable shields which a unit can place down, similar to an ACE Deployable (Launcher slot);
-  - 95% done :)
-- Health values, where hits that don't penetrate still damage the health of the shield itself, which could cause it to "overload" and deactivate prematurely.
-
 ## Why such disparity in armor values?
 
 This was balanced versus most weapons a space marine might face when using the popular TIOW(1/2) and AoD mods. 
@@ -96,8 +86,8 @@ _this call jces_shield_fnc_delShield;
 
 ## Compatibility
 
-- [x] ![Dosiel Funtime 40k Models](https://steamcommunity.com/sharedfiles/filedetails/?id=2107836294)
-- [x] ![Black Templars Armoury](https://steamcommunity.com/sharedfiles/filedetails/?id=2452029370)
+- [x] [Dosiel Funtime 40k Models](https://steamcommunity.com/sharedfiles/filedetails/?id=2107836294)
+- [x] [Black Templars Armoury](https://steamcommunity.com/sharedfiles/filedetails/?id=2452029370)
 
 If your mod adds new iron halo models and you want compatibility, reach out
 
@@ -110,6 +100,15 @@ If your mod adds new iron halo models and you want compatibility, reach out
 		- Have unit spawn, get facewear or item via loadout change/arsenal;
 		- Change to a different facewear or item, ACE Self Interact, change back to initial item;
 		- Set EDEN module cooldowns to 1 second, once you are ready to start your mission for real, go into ZEUS and place a new module with desired settings;
+
+## Future plans:
+- Human sized shields;
+  - Soon TM
+- Static shields for location defense;
+  - 80% done
+- Portable shields which a unit can place down, similar to an ACE Deployable (Launcher slot);
+  - 95% done :)
+- Health values, where hits that don't penetrate still damage the health of the shield itself, which could cause it to "overload" and deactivate prematurely.
 
 ## Credits
 

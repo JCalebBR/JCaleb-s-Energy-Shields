@@ -1,4 +1,4 @@
-["JC.E.S Modules", "Change Settings", {
+["JCaleb's Modules", "Cooldown Settings", {
 	params [["_position", [0, 0, 0], [[]], 3], ["_attachedObject", objNull, [objNull]]];
 
 	private _shieldDurationBronze = missionNamespace getVariable "jces_zen_shieldDurationBronze";

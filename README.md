@@ -112,4 +112,5 @@ If your mod adds new iron halo models and you want compatibility, reach out
 
 ## Credits
 
-* Bal & The Ultramarines - Initial idea after initial prototype shield was developed, patience and playtesting.
+* Bal & The Ultramarines - Initial idea after initial prototype shield was developed, patience and playtesting;
+* Drell - As always, beautiful mod screenshots.

@@ -1,4 +1,4 @@
-private["_bronze", "_iron", "_gold"];
+private["_bronze", "_iron", "_gold", "_valid"];
 
 _bronze = [];
 _bronze pushBack "iron_halo_dos_s_3";
@@ -18,13 +18,17 @@ _gold pushBack "bt_iron_halo_gold";
 _gold pushBack "bt_ironhalo1";
 _gold pushBack "JCES_Personal_Shield_Gold";
 
+_valid = ["JCES_Shield_Oval_Bronze", "JCES_Shield_Oval_Iron", "JCES_Shield_Oval_Gold", "JCES_Shield_Oval_Bronze_OP", "JCES_Shield_Oval_Iron_OP", "JCES_Shield_Oval_Gold_OP", "JCES_Shield_Oval_Dreadnought_Bronze", "JCES_Shield_Oval_Dreadnought_Iron", "JCES_Shield_Oval_Dreadnought_Gold", "JCES_Shield_Oval_Dreadnought_Bronze_OP", "JCES_Shield_Oval_Dreadnought_Iron_OP", "JCES_Shield_Oval_Dreadnought_Gold_OP"];
+
 jces_halo_bronze = _bronze;
 jces_halo_iron = _iron;
 jces_halo_gold = _gold;
+jces_shield_valid = _valid;
 
 publicVariable "jces_halo_bronze";
 publicVariable "jces_halo_iron";
 publicVariable "jces_halo_gold";
+publicVariable "jces_shield_valid";
 {
 	private _shieldDurationBronze = missionNamespace getVariable "jces_zen_shieldDurationBronze";
 	private _shieldCooldownBronze = missionNamespace getVariable "jces_zen_shieldCooldownBronze";

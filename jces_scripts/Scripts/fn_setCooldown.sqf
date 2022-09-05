@@ -8,24 +8,24 @@ _gold = missionNamespace getVariable "jces_halo_gold";
 
 _goggles = goggles _player;
 _items = items _player;
-_duration = "";
+_duration = 0;
 
 if (_bronze findIf {
-	_x == _goggles || "JCES_Personal_Shield_Bronze" in _items;
+	_x == _goggles || "JCES_Personal_Shield_Bronze" in _items || "JCES_Personal_Shield_Dreadnought_Bronze" in _items;
 } != -1) then {
 	_duration = missionNamespace getVariable ['jces_zen_shieldDurationBronze', -1];
 	_cooldown = missionNamespace getVariable ['jces_zen_shieldCooldownBronze', -1];
 	systemChat "JCES -> Bronze Tier";
 };
 if (_iron findIf {
-	_x == _goggles || "JCES_Personal_Shield_Iron" in _items;
+	_x == _goggles || "JCES_Personal_Shield_Iron" in _items || "JCES_Personal_Shield_Dreadnought_Iron" in _items;
 } != -1) then {
 	_duration = missionNamespace getVariable ['jces_zen_shieldDurationIron', -1];
 	_cooldown = missionNamespace getVariable ['jces_zen_shieldCooldownIron', -1];
 	systemChat "JCES -> Iron Tier";
 };
 if (_gold findIf {
-	_x == _goggles || "JCES_Personal_Shield_Gold" in _items;
+	_x == _goggles || "JCES_Personal_Shield_Gold" in _items || "JCES_Personal_Shield_Dreadnought_Gold" in _items;
 } != -1) then {
 	_duration = missionNamespace getVariable ['jces_zen_shieldDurationGold', -1];
 	_cooldown = missionNamespace getVariable ['jces_zen_shieldCooldownGold', -1];

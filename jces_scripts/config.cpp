@@ -27,6 +27,7 @@ class CfgFunctions {
             class initShield {};
             class delShield {};
             class delShieldAfterCooldown {};
+            class dreadEH {};
         };
     };
 };

@@ -4,7 +4,7 @@ class CfgPatches {
         name = "JCaleb's Energy Shields";
         author = "JCaleb2014";
         requiredVersion = 1.6;
-        units[] = {"JCES_Shield_Oval_Bronze", "JCES_Shield_Oval_Iron", "JCES_Shield_Oval_Gold"};
+        units[] = {"JCES_Shield_Oval_Bronze", "JCES_Shield_Oval_Iron", "JCES_Shield_Oval_Gold", "JCES_Shield_Oval_Bronze_OP", "JCES_Shield_Oval_Iron_OP", "JCES_Shield_Oval_Gold_OP", "JCES_Shield_Oval_Dreadnought_Bronze", "JCES_Shield_Oval_Dreadnought_Iron", "JCES_Shield_Oval_Dreadnought_Gold", "JCES_Shield_Oval_Dreadnought_Bronze_OP", "JCES_Shield_Oval_Dreadnought_Iron_OP", "JCES_Shield_Oval_Dreadnought_Gold_OP"};
         requiredAddons[] = {"ace_field_rations", "A3_Drones_F"};
     };
 };
@@ -41,6 +41,7 @@ class UniformInfo;
 class SlotsInfo;
 class UniformSlotInfo;
 class HitPoints;
+class HitHull;
 class CfgVehicles {
     class B_Helipilot_F;
     class JCES_Shield_Crew : B_Helipilot_F {
@@ -84,7 +85,7 @@ class CfgVehicles {
             // clang-format off
             killed = "_s = _this select 0;deleteVehicle _s;";
             init = "_s = _this select 0;createVehicleCrew _s;";
-            handledamage = "";
+            hitpart = "systemChat ""hit"";";
             // clang-format on
             class CBA_Extended_EventHandlers : CBA_Extended_EventHandlers_base {};
         };
@@ -95,7 +96,7 @@ class CfgVehicles {
         hitSound4[] = {"CalebsShields\jces_shields\Sounds\shield_hit3.ogg", 70, 20};
         hitSound5[] = {"CalebsShields\jces_shields\Sounds\shield_hit4.ogg", 70, 20};
         hitSound6[] = {"CalebsShields\jces_shields\Sounds\shield_hit5.ogg", 70, 20};
-        hitSounds[] = {"hitSound1", 0.05, "hitSound2", 0.05, "hitSound3", 0.05, "hitSound4", 0.05, "hitSound5", 0.05, "hitSound6", 0.05};
+        hitSounds[] = {"hitSound1", 1, "hitSound2", 1, "hitSound3", 1, "hitSound4", 1, "hitSound5", 1, "hitSound6", 1};
     };
     class JCES_Shield_Oval_Bronze : JCES_Shield_Oval_Base {
         scope = 2;
@@ -108,27 +109,72 @@ class CfgVehicles {
     };
     class JCES_Shield_Oval_Iron : JCES_Shield_Oval_Bronze {
         displayName = "Shield Oval (Iron)";
-        hiddenSelections[] = {"Outside", "Inside"};
         model = "\CalebsShields\jces_shields\Models\JCES_Shield_Oval_Iron.p3d";
+        hiddenSelections[] = {"Outside", "Inside"};
         hiddenSelectionsTextures[] = {"\CalebsShields\jces_shields\Textures\JCES_Shield_Iron_Outside_CA.paa", "\CalebsShields\jces_shields\Textures\JCES_Shield_Iron_Inside_CA.paa"};
     };
     class JCES_Shield_Oval_Gold : JCES_Shield_Oval_Bronze {
         displayName = "Shield Oval (Gold)";
-        hiddenSelections[] = {"Outside", "Inside"};
         model = "\CalebsShields\jces_shields\Models\JCES_Shield_Oval_Gold.p3d";
+        hiddenSelections[] = {"Outside", "Inside"};
         hiddenSelectionsTextures[] = {"\CalebsShields\jces_shields\Textures\JCES_Shield_Gold_Outside_CA.paa", "\CalebsShields\jces_shields\Textures\JCES_Shield_Gold_Inside_CA.paa"};
     };
     class JCES_Shield_Oval_Bronze_OP : JCES_Shield_Oval_Bronze {
         faction = "OPF_F";
         side = 0;
+        hiddenSelections[] = {"Outside", "Inside"};
+        hiddenSelectionsTextures[] = {"\CalebsShields\jces_shields\Textures\JCES_Shield_Bronze_Outside_OP_CA.paa", "\CalebsShields\jces_shields\Textures\JCES_Shield_Bronze_Inside_OP_CA.paa"};
     };
     class JCES_Shield_Oval_Iron_OP : JCES_Shield_Oval_Iron {
         faction = "OPF_F";
         side = 0;
+        hiddenSelections[] = {"Outside", "Inside"};
+        hiddenSelectionsTextures[] = {"\CalebsShields\jces_shields\Textures\JCES_Shield_Iron_Outside_OP_CA.paa", "\CalebsShields\jces_shields\Textures\JCES_Shield_Iron_Inside_OP_CA.paa"};
     };
     class JCES_Shield_Oval_Gold_OP : JCES_Shield_Oval_Gold {
         faction = "OPF_F";
         side = 0;
+        hiddenSelections[] = {"Outside", "Inside"};
+        hiddenSelectionsTextures[] = {"\CalebsShields\jces_shields\Textures\JCES_Shield_Gold_Outside_OP_CA.paa", "\CalebsShields\jces_shields\Textures\JCES_Shield_Gold_Inside_OP_CA.paa"};
+    };
+    class JCES_Shield_Oval_Dreadnought_Bronze : JCES_Shield_Oval_Base {
+        scope = 2;
+        scopeCurator = 2;
+        scopeArsenal = 2;
+        displayName = "Dreadnought Shield (Bronze)";
+        model = "\CalebsShields\jces_shields\Models\JCES_Shield_Oval_Bronze_Dreadnought.p3d";
+        hiddenSelections[] = {"Outside", "Inside"};
+        hiddenSelectionsTextures[] = {"\CalebsShields\jces_shields\Textures\JCES_Shield_Bronze_Outside_CA.paa", "\CalebsShields\jces_shields\Textures\JCES_Shield_Bronze_Inside_CA.paa"};
+    };
+    class JCES_Shield_Oval_Dreadnought_Iron : JCES_Shield_Oval_Dreadnought_Bronze {
+        displayName = "Dreadnought Shield (Iron)";
+        model = "\CalebsShields\jces_shields\Models\JCES_Shield_Oval_Iron_Dreadnought.p3d";
+        hiddenSelections[] = {"Outside", "Inside"};
+        hiddenSelectionsTextures[] = {"\CalebsShields\jces_shields\Textures\JCES_Shield_Iron_Outside_CA.paa", "\CalebsShields\jces_shields\Textures\JCES_Shield_Iron_Inside_CA.paa"};
+    };
+    class JCES_Shield_Oval_Dreadnought_Gold : JCES_Shield_Oval_Dreadnought_Bronze {
+        displayName = "Dreadnought Shield (Gold)";
+        model = "\CalebsShields\jces_shields\Models\JCES_Shield_Oval_Gold_Dreadnought.p3d";
+        hiddenSelections[] = {"Outside", "Inside"};
+        hiddenSelectionsTextures[] = {"\CalebsShields\jces_shields\Textures\JCES_Shield_Gold_Outside_CA.paa", "\CalebsShields\jces_shields\Textures\JCES_Shield_Gold_Inside_CA.paa"};
+    };
+    class JCES_Shield_Oval_Dreadnought_Bronze_OP : JCES_Shield_Oval_Dreadnought_Bronze {
+        faction = "OPF_F";
+        side = 0;
+        hiddenSelections[] = {"Outside", "Inside"};
+        hiddenSelectionsTextures[] = {"\CalebsShields\jces_shields\Textures\JCES_Shield_Bronze_Outside_OP_CA.paa", "\CalebsShields\jces_shields\Textures\JCES_Shield_Bronze_Inside_OP_CA.paa"};
+    };
+    class JCES_Shield_Oval_Dreadnought_Iron_OP : JCES_Shield_Oval_Dreadnought_Iron {
+        faction = "OPF_F";
+        side = 0;
+        hiddenSelections[] = {"Outside", "Inside"};
+        hiddenSelectionsTextures[] = {"\CalebsShields\jces_shields\Textures\JCES_Shield_Iron_Outside_OP_CA.paa", "\CalebsShields\jces_shields\Textures\JCES_Shield_Iron_Inside_OP_CA.paa"};
+    };
+    class JCES_Shield_Oval_Dreadnought_Gold_OP : JCES_Shield_Oval_Dreadnought_Gold {
+        faction = "OPF_F";
+        side = 0;
+        hiddenSelections[] = {"Outside", "Inside"};
+        hiddenSelectionsTextures[] = {"\CalebsShields\jces_shields\Textures\JCES_Shield_Gold_Outside_OP_CA.paa", "\CalebsShields\jces_shields\Textures\JCES_Shield_Gold_Inside_OP_CA.paa"};
     };
 
     // Items
@@ -170,15 +216,30 @@ class CfgWeapons {
         scopeArsenal = 2;
         scopeCurator = 2;
         displayName = "Personal Shield (Bronze)";
-        descriptionShort = "Personal Shield (Bronze) - Overrides the facewear selected";
+        descriptionShort = "Personal Shield (Bronze)";
     };
     class JCES_Personal_Shield_Iron : JCES_Personal_Shield_Bronze {
         displayName = "Personal Shield (Iron)";
-        descriptionShort = "Personal Shield (Iron) - Overrides the facewear selected";
+        descriptionShort = "Personal Shield (Iron)";
     };
     class JCES_Personal_Shield_Gold : JCES_Personal_Shield_Iron {
         displayName = "Personal Shield (Gold)";
-        descriptionShort = "Personal Shield (Gold) - Overrides the facewear selected";
+        descriptionShort = "Personal Shield (Gold)";
+    };
+    class JCES_Personal_Shield_Dreadnought_Bronze : JCES_Personal_Shield_Base {
+        scope = 2;
+        scopeArsenal = 2;
+        scopeCurator = 2;
+        displayName = "Dreadnought Personal Shield (Bronze)";
+        descriptionShort = "Dreadnought Personal Shield (Bronze)";
+    };
+    class JCES_Personal_Shield_Dreadnought_Iron : JCES_Personal_Shield_Dreadnought_Bronze {
+        displayName = "Dreadnought Personal Shield (Iron)";
+        descriptionShort = "Dreadnought Personal Shield (Iron)";
+    };
+    class JCES_Personal_Shield_Dreadnought_Gold : JCES_Personal_Shield_Dreadnought_Iron {
+        displayName = "Dreadnought Personal Shield (Gold)";
+        descriptionShort = "Dreadnought Personal Shield (Gold)";
     };
 };
 
@@ -223,17 +284,17 @@ class CfgSounds {
     sounds[] = {"jces_shield_sfx_on", "jces_shield_sfx_off", "jces_shield_sfx_hit_zero"};
     class jces_shield_sfx_on {
         name = "jces_shield_sfx_on";
-        sound[] = {"CalebsShields\jces_shields\Sounds\shield_on.ogg", db-5, 1, 10};
-        titles[] = {0,""};
+        sound[] = {"CalebsShields\jces_shields\Sounds\shield_on.ogg", db - 5, 1, 10};
+        titles[] = {0, ""};
     };
     class jces_shield_sfx_off {
         name = "jces_shield_sfx_off";
-        sound[] = {"CalebsShields\jces_shields\Sounds\shield_off.ogg", db-5, 1, 10};
-        titles[] = {0,""};
+        sound[] = {"CalebsShields\jces_shields\Sounds\shield_off.ogg", db - 5, 1, 10};
+        titles[] = {0, ""};
     };
     class jces_shield_sfx_hit_zero {
         name = "jces_shield_sfx_hit_zero";
-        sound[] = {"CalebsShields\jces_shields\Sounds\shield_hit0.ogg", db-5, 1, 100};
-        titles[] = {0,""};
+        sound[] = {"CalebsShields\jces_shields\Sounds\shield_hit0.ogg", db - 5, 1, 100};
+        titles[] = {0, ""};
     };
 };

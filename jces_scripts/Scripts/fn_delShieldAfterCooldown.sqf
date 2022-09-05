@@ -13,17 +13,17 @@ _items = items _player;
 _duration = 0;
 
 if (_bronze findIf {
-	_x == _goggles || "JCES_Personal_Shield_Bronze" in _items;
+	_x == _goggles || "JCES_Personal_Shield_Bronze" in _items || "JCES_Personal_Shield_Dreadnought_Bronze" in _items;
 } != -1) then {
 	_duration = missionNamespace getVariable ['jces_zen_shieldDurationBronze', -1];
 };
 if (_iron findIf {
-	_x == _goggles || "JCES_Personal_Shield_Iron" in _items;
+	_x == _goggles || "JCES_Personal_Shield_Iron" in _items || "JCES_Personal_Shield_Dreadnought_Iron" in _items;
 } != -1) then {
 	_duration = missionNamespace getVariable ['jces_zen_shieldDurationIron', -1];
 };
 if (_gold findIf {
-	_x == _goggles || "JCES_Personal_Shield_Gold" in _items;
+	_x == _goggles || "JCES_Personal_Shield_Gold" in _items || "JCES_Personal_Shield_Dreadnought_Gold" in _items;
 } != -1) then {
 	_duration = missionNamespace getVariable ['jces_zen_shieldDurationGold', -1];
 };

@@ -8,20 +8,20 @@ _iron = missionNamespace getVariable "jces_halo_iron";
 _gold = missionNamespace getVariable "jces_halo_gold";
 
 _goggles = goggles _player;
-_items = items player;
+_items = items _player;
 
 if (_bronze findIf {
-	_x == _goggles || "JCES_Personal_Shield_Bronze" in _items;
+	_x == _goggles || "JCES_Personal_Shield_Bronze" in _items || "JCES_Personal_Shield_Dreadnought_Bronze" in _items;
 } != -1) exitWith {
 	true;
 };
 if (_iron findIf {
-	_x == _goggles || "JCES_Personal_Shield_Iron" in _items;
+	_x == _goggles || "JCES_Personal_Shield_Iron" in _items || "JCES_Personal_Shield_Dreadnought_Iron" in _items;
 } != -1) exitWith {
 	true;
 };
 if (_gold findIf {
-	_x == _goggles || "JCES_Personal_Shield_Gold" in _items;
+	_x == _goggles || "JCES_Personal_Shield_Gold" in _items || "JCES_Personal_Shield_Dreadnought_Gold" in _items;
 } != -1) exitWith {
 	true;
 };

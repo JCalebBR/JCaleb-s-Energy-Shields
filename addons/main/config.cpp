@@ -30,6 +30,7 @@ class CfgFunctions {
             class handleHitPart {};
             class isActive {};
             class isExplosiveAmmo {};
+            class log {};
             class playHitEffect {};
             class playSound {};
             class removeAttachedShields {};

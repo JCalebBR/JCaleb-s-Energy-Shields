@@ -31,6 +31,9 @@ if (CBA_missionTime < (_unit getVariable [_nextRollVar, 0])) exitWith {false};
 if !([_unit] call jces_main_fnc_canActivate) exitWith {false};
 
 _unit setVariable [_nextRollVar, CBA_missionTime + jces_main_aiRollInterval];
-if (random 1 >= (missionNamespace getVariable ["jces_main_aiChance" + _trigger, 0])) exitWith {false};
+private _chance = missionNamespace getVariable ["jces_main_aiChance" + _trigger, 0];
+private _roll = random 1;
+["aiTrigger", "%1 rolled %2 against %3 chance %4: %5", _unit, _roll toFixed 2, _trigger, _chance, ["no shield", "raising"] select (_roll < _chance)] call jces_main_fnc_log;
+if (_roll >= _chance) exitWith {false};
 
 [_unit] call jces_main_fnc_activate

@@ -45,6 +45,7 @@ Categories (CBA sorts them alphabetically, so tier subcategories are named "Tier
   - **Damage** (server, global): minimum cooldown 10 s; kinetic and explosive damage multipliers 1 (0-20); ignore friendly fire on; rapid fire reduction on, window 1 s (0.1-5), factor 1 (0.05-3).
   - **Effects** (client): Hit Effects on.
   - **HUD** (client): enabled, show text, X 0.05, Y 0.85, scale 1.
+  - **Debug** (client, per machine): Debug Logging (`jces_main_debug`) off. A dedicated server or headless client turns it on in its own `cba_settings.sqf`.
 - **JCaleb's Energy Shields - Personal / Dreadnought / Terminator** (global): per tier `jces_main_health<Type><Tier>`, `jces_main_cooldown<Type><Tier>`, `jces_main_timeLimit<Type><Tier>`, `jces_main_maxDuration<Type><Tier>`.
 - **JCaleb's Energy Shields - Sounds** (client, only the owner hears them): `jces_main_soundsEnabled`, plus `jces_main_sound<Activate|Deactivate|Depleted|Ready>`, each an EDITBOX holding a `.wss`/`.ogg`/`.wav` path (empty = none). The defaults are the mod's own `\CalebsShields\jces_shields\Sounds\*.ogg` files, played with `playSoundUI`.
 
@@ -130,7 +131,13 @@ The WebKnight dreadnought keeps scripted health (`DT_Health`) in a HitPart handl
 
 ### Public functions (`Public: Yes`)
 
-`activate`, `deactivate`, `toggle`, `canActivate`, `isActive`, `getShieldDevice`, `getShieldItems`, `getAvailableItems`, `getUnitType`, `getAmmoDamage`, `getHealthColorIndex` (all `jces_main_fnc_*`).
+`activate`, `deactivate`, `toggle`, `canActivate`, `isActive`, `getShieldDevice`, `getShieldItems`, `getAvailableItems`, `getUnitType`, `getAmmoDamage`, `getHealthColorIndex`, `log` (all `jces_main_fnc_*`).
+
+### Debug logging (`fn_log`)
+
+- **Usage:** `["<source>", "<format string>", args...] call jces_main_fnc_log`. Does nothing unless `jces_main_debug` is on for that machine, then writes `[JCES] <mission time> frame <n> <host|server|client|hc> #<clientOwner> <source>: <message>` to the RPT.
+- **Objects** in the arguments (also arrays of objects) are expanded to `name (class, netId, local|remote)`, so the same unit or shield can be followed across the RPTs of several machines by its `netId`.
+- **What's logged:** activation (success, refusal with the reasons, forwarding to the owner), deactivation (cause, health, cooldown), time limit, cooldown over, every hit on the shooter's machine (`handleHitPart`) and on the owner's (`damageShield`: damage before/after rapid fire, ignored hits, colour changes, breaking), AI rolls, dreadnought hitbox hits and patching, curator removal, cleanup of left-behind shields, killed/vehicle/deleted/disconnect with the shield up, sounds, HUD creation and the Zeus actions. The per-frame HUD update and the hit flash animation are not logged.
 
 ### HUD (`addons/ui`)
 
@@ -140,8 +147,9 @@ The WebKnight dreadnought keeps scripted health (`DT_Health`) in a HitPart handl
 
 ### Zeus (`addons/zen`)
 
-- **The menu:** `zen_context_menu_actions >> jces_zen_energyShields` with children Toggle (on the selected objects), Add (unit under the cursor, `insertChildren` → `fn_getAddActions`, items from `jces_main_fnc_getAvailableItems` for that unit's type) and Remove (unit under the cursor; lowers the shield and removes **all** shield items in the inventory).
-- **Visibility:** Add and Remove are mutually exclusive, based on `jces_main_fnc_getShieldItems` (inventory only, halos excluded).
+- **The menu:** `zen_context_menu_actions >> jces_zen_energyShields` with children Toggle (`fn_toggleShields`), Add (`insertChildren` → `fn_getAddActions`, items from `jces_main_fnc_getAvailableItems` for the units' types) and Remove (`fn_removeShields`; lowers the shield and removes **all** shield items in the inventory). All three act on `_objects`, which ZEN fills with the selection plus the unit under the cursor.
+- **Visibility:** Add acts on the units without a shield item, Remove on the units with one, based on `jces_main_fnc_getShieldItems` (inventory only, halos excluded). For a single unit they're mutually exclusive; a mixed selection shows both.
+- **Mixed unit types:** if the units for Add have more than one type, the item list is split into one submenu per type (Personal / Terminator / Dreadnought), and each item only goes to the units of its type.
 
 ## Decisions worth knowing
 

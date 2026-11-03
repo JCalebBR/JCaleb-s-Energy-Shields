@@ -47,24 +47,27 @@ Watch field for live state: `[player getVariable "jces_main_health", player getV
 
 ## Hit effects
 
-- [ ] Personal shield: a hit sweeps lightning across the dome (about 0.4 s), nothing is visible on the Hit layer at rest, no flicker between layers up close. **If the flash looks reversed**, flip `offset1[]` to `{-1, 0}`.
+- [x] Personal shield: a hit sweeps lightning across the dome (about 0.4 s), nothing is visible on the Hit layer at rest, no flicker between layers up close. **If the flash looks reversed**, flip `offset1[]` to `{-1, 0}`.
 - [x] The overlay colour follows the health colour.
-- [ ] Dreadnought/terminator shields: texture flash in 3 steps, returning to the right colour. The Hit Effects setting turns it off.
+- [x] Dreadnought/terminator shields: texture flash in 3 steps, returning to the right colour. The Hit Effects setting turns it off.
 - [ ] MP: other players see both effects.
 
 ## Sounds
 
-- [ ] Default sounds play for turning on, turning off, depleted and ready. An empty field gives silence, a custom `.ogg` path works.
+- [x] Default sounds play for turning on, turning off, depleted and ready. An empty field gives silence, a custom `.ogg` path works.
 
 ## Zeus (ZEN)
 
 - [x] Right-click a unit → Energy Shields → Toggle / Add / Remove.
-- [ ] Add lists only the fitting items (personal for space marines, terminator for terminators, dreadnought for dreadnoughts), and the item is added (or dropped at its feet if full).
-- [ ] With an item, only Remove shows, and it lowers the shield and removes the item. Without one, only Add shows.
+- [x] Add lists only the fitting items (personal for space marines, terminator for terminators, dreadnought for dreadnoughts), and the item is added (or dropped at its feet if full).
+- [x] With an item, only Remove shows, and it lowers the shield and removes the item. Without one, only Add shows.
 - [ ] Works on remote players and server AI.
+- [ ] With several units selected, Toggle / Add / Remove act on all of them (Add only on the ones without a shield, Remove only on the ones with one), and the message shows the unit count.
+- [ ] Selecting space marines and terminators together, Add shows a Personal and a Terminator submenu, and each item only goes to the matching units.
 - [x] Raised shields (dome and its crew) never show up in Zeus: no icon, no entry in the entity list, not selectable, also with ZEN's "Auto Add Objects" on and on AI raised by Zeus. The unit itself stays editable.
 
 ## Multiplayer
 
 - [ ] Colour changes and the shield itself are visible to everyone, including JIP players.
 - [ ] A player disconnecting with the shield up leaves no floating dome.
+- [ ] With Debug Logging on, `[JCES]` lines show up in the RPT (the setting change itself logs one), and nothing is logged with it off. Raise, get hit and lower a shield and check the lines read sensibly, also on the server RPT for a remote unit.

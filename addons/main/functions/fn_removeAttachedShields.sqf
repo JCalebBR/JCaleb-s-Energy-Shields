@@ -25,6 +25,7 @@ private _candidates = +_attached;
 {
     if (_x isKindOf "JCES_Shield_Oval_Base") then {
         private _shield = _x;
+        ["removeAttachedShields", "Deleting %1 left on %2", _shield, _unit] call jces_main_fnc_log;
         {
             _shield deleteVehicleCrew _x;
         } forEach crew _shield;

@@ -18,6 +18,7 @@ params [["_unit", objNull, [objNull]]];
 
 if (isNull _unit) exitWith {false};
 if (!local _unit) exitWith {
+    ["toggle", "%1 is remote, sending to its owner", _unit] call jces_main_fnc_log;
     ["jces_main_toggle", [_unit], _unit] call CBA_fnc_targetEvent;
     false
 };

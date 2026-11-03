@@ -18,10 +18,18 @@ params [["_unit", objNull, [objNull]]];
 
 if (isNull _unit) exitWith {false};
 if (!local _unit) exitWith {
+    ["activate", "%1 is remote, sending to its owner", _unit] call jces_main_fnc_log;
     ["jces_main_activate", [_unit], _unit] call CBA_fnc_targetEvent;
     false
 };
-if !([_unit] call jces_main_fnc_canActivate) exitWith {false};
+if !([_unit] call jces_main_fnc_canActivate) exitWith {
+    [
+        "activate", "Can't raise on %1: alive %2, vehicle %3, active %4, cooldown left %5, device %6",
+        _unit, alive _unit, objectParent _unit, [_unit] call jces_main_fnc_isActive,
+        ((_unit getVariable ["jces_main_cooldownEnd", 0]) - CBA_missionTime) max 0, [_unit] call jces_main_fnc_getShieldDevice
+    ] call jces_main_fnc_log;
+    false
+};
 
 ([_unit] call jces_main_fnc_getShieldDevice) params ["_tier", "_type"];
 private _tierName = jces_main_tierNames select (_tier - 1);
@@ -62,6 +70,7 @@ _shield setVariable ["jces_main_owner", _unit];
 _shield addEventHandler ["HandleDamage", {0}];
 _shield addEventHandler ["Killed", {
     params ["_shield"];
+    ["activate", "Shield %1 was killed", _shield] call jces_main_fnc_log;
     [jces_main_fnc_deactivate, [_shield getVariable ["jces_main_owner", objNull], true]] call CBA_fnc_execNextFrame;
 }];
 _shield addEventHandler ["Deleted", {
@@ -69,6 +78,7 @@ _shield addEventHandler ["Deleted", {
     private _unit = _shield getVariable ["jces_main_owner", objNull];
     // Removed by something other than jces_main_fnc_deactivate (e.g. Zeus), count it as broken.
     if ((_unit getVariable ["jces_main_shieldObject", objNull]) isEqualTo _shield) then {
+        ["activate", "Shield %1 of %2 was deleted externally, counting it as broken", _shield, _unit] call jces_main_fnc_log;
         [_unit, true, false] call jces_main_fnc_deactivate;
     };
 }];
@@ -94,6 +104,7 @@ if (missionNamespace getVariable ["jces_main_timeLimit" + _settingSuffix, true])
         params ["_unit", "_shield"];
         // Skipped if this shield already went down (a newer one won't match).
         if ((_unit getVariable ["jces_main_shieldObject", objNull]) isEqualTo _shield && {!isNull _shield}) then {
+            ["activate", "Time limit reached for %1", _unit] call jces_main_fnc_log;
             [_unit] call jces_main_fnc_deactivate;
         };
     }, [_unit, _shield], _duration] call CBA_fnc_waitAndExecute;
@@ -105,10 +116,12 @@ _unit setVariable ["jces_main_shieldDuration", _duration];
 ["jces_main_removeFromCurators", [_shield]] call CBA_fnc_serverEvent;
 
 if (_type == "Dreadnought" && {_target != _unit} && {!(_target getVariable ["jces_main_hitPartPatched", false])}) then {
+    ["activate", "Patching dreadnought hitbox %1 on every machine", _target] call jces_main_fnc_log;
     private _jipId = ["jces_main_patchDreadnoughtHitbox", [_target], format ["jces_main_hitbox_%1", netId _target]] call CBA_fnc_globalEventJIP;
     [_jipId, _target] call CBA_fnc_removeGlobalEventJIP;
 };
 
+["activate", "Raised %1 on %2: health %3, duration %4, attached to %5 %6 %7, crew %8", _shield, _unit, _maxHealth, _duration, _target, _offset, _bone, crew _shield] call jces_main_fnc_log;
 ["jces_main_shieldActivated", [_unit, _shield]] call CBA_fnc_localEvent;
 
 true

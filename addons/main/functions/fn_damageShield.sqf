@@ -22,9 +22,13 @@ params [["_shield", objNull, [objNull]], ["_damage", 0, [0]], ["_instigator", ob
 if (_damage <= 0 || {_shield getVariable ["jces_main_broken", false]}) exitWith {};
 
 private _unit = _shield getVariable ["jces_main_owner", objNull];
-if ((_unit getVariable ["jces_main_shieldObject", objNull]) isNotEqualTo _shield) exitWith {};
+if ((_unit getVariable ["jces_main_shieldObject", objNull]) isNotEqualTo _shield) exitWith {
+    ["damageShield", "Hit on %1 ignored, it's no longer %2's active shield", _shield, _unit] call jces_main_fnc_log;
+};
 
-if (_instigator isEqualTo _unit) exitWith {};
+if (_instigator isEqualTo _unit) exitWith {
+    ["damageShield", "Hit on %1 ignored, %2 shot their own shield", _shield, _unit] call jces_main_fnc_log;
+};
 
 // Everyone sees the hit effect, even for hits that do no damage (friendly fire).
 private _hasHitLayer = getNumber (configOf _shield >> "jces_hitLayer") == 1;
@@ -42,7 +46,11 @@ if (_hasHitLayer) then {
         ["jces_main_shieldHitEffect", [_shield]] call CBA_fnc_globalEvent;
     };
 };
-if (jces_main_ignoreFriendlyFire && {!isNull _instigator} && {((side group _unit) getFriend (side group _instigator)) >= 0.6}) exitWith {};
+if (jces_main_ignoreFriendlyFire && {!isNull _instigator} && {((side group _unit) getFriend (side group _instigator)) >= 0.6}) exitWith {
+    ["damageShield", "Hit on %1 ignored, friendly fire from %2", _shield, _instigator] call jces_main_fnc_log;
+};
+
+private _rawDamage = _damage;
 
 // Rapid fire reduction: every earlier hit of the same ammo within the window adds the factor to the divisor,
 // so sustained fast fire is worth far less per round while a single heavy hit keeps its full damage.
@@ -63,9 +71,11 @@ private _maxHealth = _unit getVariable ["jces_main_maxHealth", 1];
 private _health = ((_unit getVariable ["jces_main_health", 0]) - _damage) max 0;
 _unit setVariable ["jces_main_health", _health];
 
+["damageShield", "%1 hit by %2 with %3: %4 damage (%5 before rapid fire), health %6/%7", _shield, _instigator, _ammo, _damage, _rawDamage, _health, _maxHealth] call jces_main_fnc_log;
 ["jces_main_shieldDamaged", [_unit, _shield, _damage, _health]] call CBA_fnc_localEvent;
 
 if (_health == 0) exitWith {
+    ["damageShield", "%1 broke", _shield] call jces_main_fnc_log;
     _shield setVariable ["jces_main_broken", true];
     // Hits arrive from inside HitPart handlers, deleting the shield there is unsafe, wait a frame.
     [jces_main_fnc_deactivate, [_unit, true]] call CBA_fnc_execNextFrame;
@@ -73,6 +83,7 @@ if (_health == 0) exitWith {
 
 private _colorIndex = [_health / _maxHealth] call jces_main_fnc_getHealthColorIndex;
 if (_colorIndex != (_unit getVariable ["jces_main_colorIndex", 0])) then {
+    ["damageShield", "%1 changed to colour %2", _shield, _colorIndex] call jces_main_fnc_log;
     _unit setVariable ["jces_main_colorIndex", _colorIndex];
     // Public so the hit flash on other machines can fade back to the right colour.
     _shield setVariable ["jces_main_colorIndex", _colorIndex, true];

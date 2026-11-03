@@ -32,6 +32,7 @@ if (!_show) exitWith {
 };
 
 if (isNull _display) then {
+    ["hudUpdate", "Creating the HUD for %1", _unit] call jces_main_fnc_log;
     ("jces_ui_hud" call BIS_fnc_rscLayer) cutRsc ["jces_ui_hud", "PLAIN", -1, false];
     _display = uiNamespace getVariable ["jces_ui_hud", displayNull];
     call jces_ui_fnc_hudLayout;

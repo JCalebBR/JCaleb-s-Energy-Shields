@@ -20,5 +20,6 @@ if (!hasInterface || {!jces_main_soundsEnabled} || {_unit isNotEqualTo ace_playe
 
 private _path = trim (missionNamespace getVariable [format ["jces_main_sound%1", _action], ""]);
 if (_path isNotEqualTo "") then {
+    ["playSound", "Playing %1 sound %2", _action, _path] call jces_main_fnc_log;
     playSoundUI [_path];
 };

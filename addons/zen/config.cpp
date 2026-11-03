@@ -17,6 +17,7 @@ class CfgFunctions {
             file = "\CalebsShields\addons\zen\functions";
             class canEditShield {};
             class getAddActions {};
+            class removeShields {};
             class toggleShields {};
         };
     };
@@ -35,18 +36,18 @@ class zen_context_menu_actions {
             condition = "_objects findIf {_x call jces_zen_fnc_canEditShield && {([_x] call jces_main_fnc_getShieldDevice) isNotEqualTo []}} != -1";
             statement = "_objects call jces_zen_fnc_toggleShields";
         };
-        // Add and Remove act on the unit under the cursor, only one of them shows at a time.
+        // Add only shows units without a shield, Remove only units with one, a mixed selection shows both.
         class Add {
             displayName = "Add Shield";
             icon = "\a3\3den\data\displays\display3den\panelright\customcomposition_add_ca.paa";
-            condition = "_hoveredEntity call jces_zen_fnc_canEditShield && {([_hoveredEntity] call jces_main_fnc_getShieldItems) isEqualTo []}";
-            insertChildren = "_hoveredEntity call jces_zen_fnc_getAddActions";
+            condition = "_objects findIf {_x call jces_zen_fnc_canEditShield && {([_x] call jces_main_fnc_getShieldItems) isEqualTo []}} != -1";
+            insertChildren = "_objects call jces_zen_fnc_getAddActions";
         };
         class Remove {
             displayName = "Remove Shield";
             icon = "\a3\3den\data\displays\display3den\panelleft\entitylist_delete_ca.paa";
-            condition = "_hoveredEntity call jces_zen_fnc_canEditShield && {([_hoveredEntity] call jces_main_fnc_getShieldItems) isNotEqualTo []}";
-            statement = "['jces_main_removeShieldItems', [_hoveredEntity], _hoveredEntity] call CBA_fnc_targetEvent; ['Removed shield from %1', name _hoveredEntity] call zen_common_fnc_showMessage";
+            condition = "_objects findIf {_x call jces_zen_fnc_canEditShield && {([_x] call jces_main_fnc_getShieldItems) isNotEqualTo []}} != -1";
+            statement = "_objects call jces_zen_fnc_removeShields";
         };
     };
 };

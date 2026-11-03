@@ -3,6 +3,9 @@
 ["CAManBase", "Killed", {
     params ["_unit"];
     if (local _unit) then {
+        if ([_unit] call jces_main_fnc_isActive) then {
+            ["postInit", "%1 killed with the shield up", _unit] call jces_main_fnc_log;
+        };
         [_unit, true] call jces_main_fnc_deactivate;
     };
 }] call CBA_fnc_addClassEventHandler;
@@ -11,6 +14,9 @@
 ["CAManBase", "GetInMan", {
     params ["_unit"];
     if (local _unit) then {
+        if ([_unit] call jces_main_fnc_isActive) then {
+            ["postInit", "%1 entered %2 with the shield up", _unit, objectParent _unit] call jces_main_fnc_log;
+        };
         [_unit] call jces_main_fnc_deactivate;
     };
 }] call CBA_fnc_addClassEventHandler;
@@ -19,6 +25,9 @@
 ["CAManBase", "Deleted", {
     params ["_unit"];
     if (local _unit) then {
+        if ([_unit] call jces_main_fnc_isActive) then {
+            ["postInit", "%1 deleted with the shield up", _unit] call jces_main_fnc_log;
+        };
         [_unit] call jces_main_fnc_deactivate;
     };
     // Deleted may only fire on the machine that deleted the unit, which isn't always the owner. Attached objects are global.
@@ -29,6 +38,7 @@ if (isServer) then {
     // A disconnecting client's shield becomes the server's, nobody would remove it otherwise.
     addMissionEventHandler ["HandleDisconnect", {
         params ["_unit"];
+        ["postInit", "%1 disconnected", _unit] call jces_main_fnc_log;
         [_unit] call jces_main_fnc_removeAttachedShields;
         false
     }];

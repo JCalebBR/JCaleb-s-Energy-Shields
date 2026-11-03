@@ -18,6 +18,7 @@ private _units = _this select {
     _x call jces_zen_fnc_canEditShield && {([_x] call jces_main_fnc_getShieldDevice) isNotEqualTo []}
 };
 
+["zen", "Zeus toggling the shield of %1", _units] call jces_main_fnc_log;
 {
     [_x] call jces_main_fnc_toggle;
 } forEach _units;

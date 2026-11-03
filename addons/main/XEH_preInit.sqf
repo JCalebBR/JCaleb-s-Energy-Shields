@@ -60,12 +60,14 @@ jces_main_availableItemsCache = createHashMap;
 // Inventory commands need the unit to be local, Zeus sends these to its owner.
 ["jces_main_addShieldItem", {
     params ["_unit", "_item"];
+    ["main", "Adding %1 to %2", _item, _unit] call jces_main_fnc_log;
     // Drops it at the unit's feet if the inventory is full.
     [_unit, _item, true, true] call CBA_fnc_addItem;
 }] call CBA_fnc_addEventHandler;
 
 ["jces_main_removeShieldItems", {
     params ["_unit"];
+    ["main", "Removing shield items %1 from %2", [_unit] call jces_main_fnc_getShieldItems, _unit] call jces_main_fnc_log;
     // The shield can't stay up without its device.
     [_unit] call jces_main_fnc_deactivate;
     {
@@ -93,6 +95,7 @@ jces_main_availableItemsCache = createHashMap;
     params ["_shield"];
     private _remove = {
         if (isNull _this) exitWith {};
+        ["main", "Removing %1 and its crew from %2 curator(s)", _this, count allCurators] call jces_main_fnc_log;
         {
             _x removeCuratorEditableObjects [[_this], true];
         } forEach allCurators;
@@ -106,6 +109,7 @@ jces_main_availableItemsCache = createHashMap;
     params ["_hitbox"];
     if (isNull _hitbox || {_hitbox getVariable ["jces_main_hitPartPatched", false]}) exitWith {};
     _hitbox setVariable ["jces_main_hitPartPatched", true];
+    ["main", "Replacing the HitPart handler of dreadnought hitbox %1", _hitbox] call jces_main_fnc_log;
     // The dreadnought's scripted health is the first HitPart handler, swap it for one that respects the shield.
     _hitbox removeEventHandler ["HitPart", 0];
     _hitbox addEventHandler ["HitPart", {_this call jces_main_fnc_dreadnoughtHitPart}];
@@ -268,6 +272,22 @@ private _aiCategory = _modName + " - AI";
     [_coreCategory, "Effects"],
     true,
     0
+] call CBA_fnc_addSetting;
+
+// Per machine, so a single client (or the server through its own settings) can log without flooding everyone's RPT.
+[
+    "jces_main_debug",
+    "CHECKBOX",
+    ["Debug Logging", "Writes everything the mod does on this machine to the RPT, prefixed with [JCES]. For hunting bugs, e.g. in multiplayer compare the RPTs of the machines involved."],
+    [_coreCategory, "Debug"],
+    false,
+    0,
+    {
+        params ["_enabled"];
+        if (_enabled) then {
+            ["main", "Debug logging enabled, player %1, mission %2", profileName, missionName] call jces_main_fnc_log;
+        };
+    }
 ] call CBA_fnc_addSetting;
 
 // Sounds only play for the shield's owner, so these are per player.

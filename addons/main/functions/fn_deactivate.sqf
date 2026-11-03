@@ -22,6 +22,7 @@ params [["_unit", objNull, [objNull]], ["_broken", false, [false]], ["_deleteShi
 
 if (isNull _unit) exitWith {false};
 if (!local _unit) exitWith {
+    ["deactivate", "%1 is remote, sending to its owner (broken %2)", _unit, _broken] call jces_main_fnc_log;
     ["jces_main_deactivate", [_unit, _broken], _unit] call CBA_fnc_targetEvent;
     false
 };
@@ -69,11 +70,16 @@ if (hasInterface) then {
         params ["_unit", "_cooldownEnd"];
         // Skipped if a newer cooldown replaced this one.
         if ((_unit getVariable ["jces_main_cooldownEnd", 0]) == _cooldownEnd) then {
+            ["deactivate", "Cooldown over for %1", _unit] call jces_main_fnc_log;
             [_unit, "Ready"] call jces_main_fnc_playSound;
         };
     }, [_unit, _cooldownEnd], _cooldown] call CBA_fnc_waitAndExecute;
 };
 
+[
+    "deactivate", "Lowered %1 on %2: broken %3, deleted %4, health %5/%6, cooldown %7 s",
+    _shield, _unit, _broken, _deleteShield, _unit getVariable ["jces_main_health", 0], _unit getVariable ["jces_main_maxHealth", 0], _cooldown
+] call jces_main_fnc_log;
 ["jces_main_shieldDeactivated", [_unit, _broken, _cooldown]] call CBA_fnc_localEvent;
 
 true

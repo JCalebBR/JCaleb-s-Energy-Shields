@@ -4,3 +4,8 @@
 *.blend*
 *.p3d
 *.png
+.hemttout/
+releases/
+.hemttprivatekey
+.biprivatekey
+conversion_errors.log

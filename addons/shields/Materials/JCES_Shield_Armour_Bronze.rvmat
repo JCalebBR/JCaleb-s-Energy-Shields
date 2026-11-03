@@ -1,0 +1,11 @@
+#define _ARMA_
+
+surfaceInfo = "CalebsShields\jces_shields\Materials\JCES_Shield_Armour_Bronze.bisurf";
+ambient[] = {"0.32*(5.5/sqrt(290))", "0.345*(5.5/sqrt(290))", "0.55*(5.5/sqrt(290))", 1};
+diffuse[] = {"0.32*(5.5/sqrt(290))", "0.345*(5.5/sqrt(290))", "0.55*(5.5/sqrt(290))", 1};
+forcedDiffuse[] = {0, 0, 0, 0};
+emmisive[] = {0, 0, 0, 1};
+specular[] = {0, 0, 0, 1};
+specularPower = 1;
+PixelShaderID = "Normal";
+VertexShaderID = "Basic";

@@ -1,0 +1,41 @@
+name = "JCaleb's Energy Shields"
+author = "JCaleb2014"
+prefix = "CalebsShields"
+
+[version]
+major = 2
+minor = 0
+patch = 0
+build = 0
+git_hash = 0
+
+[files]
+include = [
+    "mod.cpp",
+    "README.md",
+]
+exclude = [
+    "*.blend",
+    "*.blend1",
+    "*.psd",
+    "*.spp",
+    "*.zip",
+    "*.7z",
+    "*.rar",
+    "*.bat",
+    "*.sh",
+    "*.txt",
+    "*.log",
+    "*.ini",
+    "*.html",
+    "*.png",
+    "*.py",
+    "thumbs.db",
+    "*.dep",
+    "*.bak",
+    "*.cmd",
+    "*.fbx",
+    "*.code-workspace",
+    ".vscode/*",
+    "*.xcf",
+]

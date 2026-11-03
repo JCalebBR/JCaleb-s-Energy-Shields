@@ -1,0 +1,10 @@
+name = "JCaleb's Energy Shields";
+actionName = "Workshop";
+author = "JCaleb2014";
+action = "https://steamcommunity.com/profiles/76561198131886488/myworkshopfiles/?appid=107410";
+description = "JCaleb's Energy Shields for the 40K Universe. Compatible with Space Marines";
+overview = "";
+logo = "CalebsShields\addons\main\data\logo.paa";
+logoSmall = "CalebsShields\addons\main\data\logosmall.paa";
+logoOver = "CalebsShields\addons\main\data\logo.paa";
+picture = "CalebsShields\addons\main\data\picture.paa";
